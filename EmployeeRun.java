@@ -9,10 +9,9 @@ public class EmployeeRun
         empOne.empSalary(1000);
         empOne.setHireDay(2021, 1,20);
 
-        Employee empTwo = new Employee("max");
+        Employee empTwo = new Employee("max",700);
         empTwo.setAge(21);
         empTwo.setDesc("程序员");
-        empTwo.empSalary(500);
         empTwo.raiseSalary();
 
         Employee[] emps = new Employee[2];
