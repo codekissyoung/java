@@ -1,31 +1,42 @@
-public class Employee
-{
-    String name;
-    int age;
-    String designation;
-    double salary;
+import java.time.LocalDate;
 
-    // Employee 类的构造器
+public class Employee {
+    private final String name;
+    private String designation;
+    private double salary;
+    private int age;
+    private LocalDate hireDay;
+
+    // constructor 1
+
+    //    public Employee(String name, double s){
+//        this.name = name;
+//        this.salary = s;
+//    }
     public Employee(String name) {
         this.name = name;
     }
 
-    // 设置age的值
-    public void empAge(int empAge) {
-        age = empAge;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    /* 设置designation的值*/
-    public void empDesignation(String empDesig) {
-        designation = empDesig;
+    public void setDesc(String desc) {
+        designation = desc;
     }
 
-    /* 设置salary的值*/
-    public void empSalary(double empSalary) {
-        salary = empSalary;
+    public void empSalary(double s) {
+        salary = s;
     }
 
-    /* 打印信息 */
+    public void raiseSalary() {
+        this.salary += 100;
+    }
+
+    public void setHireDay(int year, int month, int day) {
+        this.hireDay = LocalDate.of(year, month, day);
+    }
+
     public void printEmployee() {
         System.out.println("名字:" + name);
         System.out.println("年龄:" + age);
