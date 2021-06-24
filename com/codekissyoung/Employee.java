@@ -1,3 +1,5 @@
+package com.codekissyoung;
+
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Random;
