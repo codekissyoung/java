@@ -1,3 +1,5 @@
+package JavaCoffe;
+
 import com.codekissyoung.Employee;
 import java.text.NumberFormat;
 

@@ -1,2 +1,5 @@
-package inheritance;public class Employee {
+package inheritance;
+
+public class Employee {
+
 }
