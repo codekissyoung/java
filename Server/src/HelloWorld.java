@@ -1,17 +1,16 @@
-package JavaCoffe;
+package Server.src;
 
-import com.codekissyoung.Employee;
 import java.text.NumberFormat;
 
-public class Server {
+public class HelloWorld {
 
-    public static void main(String[] args)
-    {
-        Employee link = new Employee("link");
-        Employee max = new Employee("max",700);
+    public static void main(String[] args) {
+
+        Server.codekissyoung.Employee link = new Server.codekissyoung.Employee("link");
+        Server.codekissyoung.Employee max = new Server.codekissyoung.Employee("max",700);
 
         link.setAge(26);
-        link.setDesc("程序员");
+        link.setDesc("程序员aaa");
         link.empSalary(1000);
         link.setHireDay(2021, 1,20);
 
@@ -19,11 +18,11 @@ public class Server {
         max.setDesc("程序员");
         max.raiseSalary();
 
-        Employee[] emps = new Employee[2];
+        Server.codekissyoung.Employee[] emps = new Server.codekissyoung.Employee[2];
         emps[0] = link;
         emps[1] = max;
 
-        for(Employee e : emps){
+        for(Server.codekissyoung.Employee e : emps){
             e.printEmployee();
         }
 
@@ -57,6 +56,5 @@ public class Server {
         System.out.println("UTF-16 save length : " + strLen.length()); // 12
         System.out.println("CodePoint length : " + strLen.codePointCount(0,strLen.length())); // 12
         System.out.println("chaAt : " + strLen.charAt(10)); // ™
-
     }
 }
