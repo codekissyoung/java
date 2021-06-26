@@ -70,9 +70,9 @@ public class Employee extends Person {
     }
 
     // constructor 2
-    public Employee(String name, double s) {
+    public Employee(String name, double salary) {
         this(name); // 调用另一个 constructor
-        this.salary = s;
+        this.salary = salary;
     }
 
     public void setAge(int age) {
@@ -110,8 +110,19 @@ public class Employee extends Person {
 //    }
 
     // 类方法可以访问类私有属性（包括使用本类生成的别的对象的私有属性）
-    public boolean equals(Employee other) {
-        return this.name.equals(other.name); // other 竟然可以调用私有成员?!
+    public boolean equals(Object other) {
+        if (other == null)
+            return false;
+        if (this.getClass() != other.getClass())
+            return false;
+        if (false == other instanceof Employee)
+            return false;
+        if (this == other)
+            return true;
+        Employee e = (Employee) other;
+
+        // e 竟然可以调用私有成员
+        return this.name.equals(e.name) && this.hireDay.equals(e.hireDay);
     }
 
     public void printEmployee() {

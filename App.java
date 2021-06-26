@@ -17,5 +17,13 @@ public class App
         boss.setDesc("CTO");
         boss.setBonus(1000);
         boss.printEmployee();
+
+        // 所有类的父对象
+        Object obj = new Employee("max",800);
+        if(obj instanceof Employee){
+            Employee e = (Employee) obj;
+            e.printEmployee();
+        }
+
     }
 }
