@@ -20,6 +20,11 @@ public class Manager extends Employee{
         this.bonus = b;
     }
 
+    // equals 的实现要点：
+    // 1. x.equals(x) 必须返回 true
+    // 2. x.equals(y) 和 y.equals(x) 必须拥有相同的结果！！！
+    // 3. 如果 x.equals(y) 且 y.equals(z) ，则可以推出 x.equals(z)
+    // 4. x.equals(null) 返回 false
     public boolean equals(Object other)
     {
         if(!super.equals(other))
