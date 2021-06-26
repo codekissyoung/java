@@ -1,5 +1,3 @@
-package Server.codekissyoung;
-
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Random;
@@ -18,7 +16,7 @@ public class Employee {
 
     private static int nextId;
 
-    // 类第一次加载的时候，将会进行静态域的初始化。
+    // 类第一次加载的时候，将会进行静态域的初始化
     static {
         // 给 nextId 一个随机的初始值
         Random randomIntGen = new Random();
@@ -90,13 +88,6 @@ public class Employee {
         System.out.println("薪水:" + salary);
     }
 
-    public static void swap(Employee x, Employee y)
-    {
-        Employee temp = x;
-        x = y;
-        y = temp;
-    }
-
     // 静态的main方法用于单元测试 运行: java Employee
     public static void main(String[] args)
     {
@@ -126,7 +117,5 @@ public class Employee {
         double x = 0.1;
         System.out.println(cur.format(x)); // ￥0.10
         System.out.println(percent.format(x)); // 10%
-
-
     }
 }
