@@ -1,7 +1,5 @@
 package inheritance;
 
-import com.sun.nio.sctp.NotificationHandler;
-
 public class Manager extends Employee{
 
     private double bonus;
