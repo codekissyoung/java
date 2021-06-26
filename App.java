@@ -1,11 +1,10 @@
-import link.Employee;
+import inheritance.Employee;
 
 public class App
 {
     public static void main(String[] args)
     {
         Employee link = new Employee("link");
-        Employee max = new Employee("max",700);
 
         link.setAge(26);
         link.setDesc("程序员");
