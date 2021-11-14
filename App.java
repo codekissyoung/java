@@ -18,9 +18,6 @@ public class App {
 
         // 所有类的父对象
         var obj = new Employee("max", 800);
-        if (obj instanceof Employee) {
-            Employee e = obj;
-            e.printEmployee();
-        }
+        obj.printEmployee();
     }
 }

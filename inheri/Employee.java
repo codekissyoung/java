@@ -1,38 +1,14 @@
 package inheri;
+
 import java.time.LocalDate;
 import java.util.Random;
 
 public class Employee extends Person {
 
-    // 静态的main方法用于单元测试 运行: java Employee
-    public static void main(String[] args) {
-        var link = new Employee("link");
-        var max = new Employee("max", 700);
-
-        link.setAge(26);
-        link.setDesc("程序员");
-        link.empSalary(1000);
-
-        max.setAge(21);
-        max.setDesc("程序员");
-        max.raiseSalary();
-
-        Employee[] temps = new Employee[2];
-        temps[0] = link;
-        temps[1] = max;
-
-        for (Employee e : temps) {
-            e.printEmployee();
-        }
-    }
-
-    // 显示指定初始值，是非常好的习惯
     private String designation = "";
     private double salary = 0.0;
     private int age = 0;
-
-    // final 属性：被设置后，不能被修改，即不可以再指向别的String对象
-    private final LocalDate hireDay;
+    private final LocalDate hireDay; // final 属性：被设置后，不能被修改，即不可以再指向别的String对象
 
     // 类第一次加载的时候，将会进行静态域的初始化
     private static int nextId;
@@ -50,7 +26,6 @@ public class Employee extends Person {
         nextId++;
     }
 
-    // constructor 1
     public Employee() {
         super("");
         salary = 0;
@@ -68,7 +43,6 @@ public class Employee extends Person {
         this.hireDay = LocalDate.now();
     }
 
-    // constructor 2
     public Employee(String name, double salary) {
         this(name); // 调用另一个 constructor
         this.salary = salary;
@@ -88,6 +62,15 @@ public class Employee extends Person {
 
     public void empSalary(double s) {
         salary = s;
+    }
+
+    @Override
+    public void run() {
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     public void raiseSalary() {

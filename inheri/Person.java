@@ -2,7 +2,6 @@ package inheri;
 
 public abstract class Person
 {
-    public abstract String getDesc();
     protected String name;
 
     public Person(String name)
@@ -10,9 +9,10 @@ public abstract class Person
         this.name = name;
     }
 
-    public String getName()
-    {
-        return this.name;
-    }
+    public abstract void run();
+    public abstract String getName();
+    public abstract String getDesc();
+
+
 
 }

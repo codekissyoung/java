@@ -239,20 +239,10 @@ public class Lexer {
     /**
      * Token的一个简单实现。只有类型和文本值两个属性。
      */
-    private final class SimpleToken implements Token {
-        //Token类型
-        private TokenType type = null;
-
-        //文本值
-        private String text = null;
-
-
-        @Override
-        public TokenType getType() {
-            return type;
-        }
-
-        @Override
+    private static final class SimpleToken implements Token {
+        private TokenType type = null;         //Token类型
+        private String text = null;         //文本值
+        public TokenType getType() {return this.type;}
         public String getText() {
             return text;
         }
