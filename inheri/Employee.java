@@ -2,6 +2,7 @@ package inheri;
 
 import java.time.LocalDate;
 import java.util.Random;
+import static java.lang.System.out;
 
 public class Employee extends Person {
 
@@ -107,13 +108,12 @@ public class Employee extends Person {
     }
 
     public void printEmployee() {
-        System.out.println("****************");
-        System.out.println("Id : " + this.id);
-        System.out.println("名字:" + name);
-        System.out.println("年龄:" + age);
-        System.out.println("职位:" + this.getDesc());
-        System.out.println("薪水:" + salary);
-        System.out.println("-----------------");
+        out.println("Id : " + this.id);
+        out.println("名字:" + name);
+        out.println("年龄:" + age);
+        out.println("职位:" + this.getDesc());
+        out.println("薪水:" + salary);
+        out.println("-----------------------------------------------------------------");
     }
 
 }
