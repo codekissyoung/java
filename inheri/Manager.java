@@ -1,4 +1,4 @@
-package inheritance;
+package inheri;
 
 public class Manager extends Employee{
 

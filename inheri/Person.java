@@ -1,4 +1,4 @@
-package inheritance;
+package inheri;
 
 public abstract class Person
 {

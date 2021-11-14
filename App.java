@@ -1,5 +1,5 @@
-import inheritance.Employee;
-import inheritance.Manager;
+import inheri.Employee;
+import inheri.Manager;
 
 public class App
 {

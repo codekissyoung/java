@@ -1,4 +1,4 @@
-package inheritance;
+package inheri;
 
 import java.time.LocalDate;
 import java.util.Random;
