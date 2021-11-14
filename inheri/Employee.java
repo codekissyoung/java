@@ -1,5 +1,4 @@
 package inheri;
-
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -7,8 +6,8 @@ public class Employee extends Person {
 
     // 静态的main方法用于单元测试 运行: java Employee
     public static void main(String[] args) {
-        Employee link = new Employee("link");
-        Employee max = new Employee("max", 700);
+        var link = new Employee("link");
+        var max = new Employee("max", 700);
 
         link.setAge(26);
         link.setDesc("程序员");
@@ -79,7 +78,6 @@ public class Employee extends Person {
         this.age = age;
     }
 
-    @Override
     public String getDesc() {
         return this.designation;
     }
@@ -115,7 +113,7 @@ public class Employee extends Person {
             return false;
         if (this.getClass() != other.getClass())
             return false;
-        if (false == other instanceof Employee)
+        if (!(other instanceof Employee))
             return false;
         if (this == other)
             return true;
