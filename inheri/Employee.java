@@ -113,7 +113,7 @@ public class Employee extends Person {
         out.println("年龄:" + age);
         out.println("职位:" + this.getDesc());
         out.println("薪水:" + salary);
-        out.println("-----------------------------------------------------------------");
+        out.println("-----------------------");
     }
 
 }
