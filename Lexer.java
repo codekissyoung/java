@@ -8,7 +8,7 @@ public class Lexer {
     public static void main(String[] args) {
         Lexer lexer = new Lexer();
 
-        String script = "int age = 45;";
+        var script = "int age = 45;";
         System.out.println("parse :" + script);
         SimpleTokenReader tokenReader = lexer.tokenize(script);
         dump(tokenReader);
