@@ -1,5 +1,8 @@
+package App;
+
 import inheri.Employee;
 import inheri.Manager;
+import javax.xml.XMLConstants;
 
 public class App {
     public static void main(String[] args) {
@@ -25,5 +28,12 @@ public class App {
         for (Employee e: ems) {
             e.printEmployee();
         }
+
+        var g = new App();
+        System.out.println(g.hello());
+    }
+
+    private String hello() {
+        return XMLConstants.XML_NS_PREFIX;
     }
 }

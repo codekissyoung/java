@@ -1,3 +1,5 @@
+package Lexer;
+
 public enum TokenType{
     Plus,   // +
     Minus,  // -
