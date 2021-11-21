@@ -1,5 +1,4 @@
 package App;
-
 import inheri.Employee;
 import inheri.Manager;
 import javax.xml.XMLConstants;
@@ -30,10 +29,22 @@ public class App {
         }
 
         var g = new App();
-        System.out.println(g.hello());
+        echo(g.hello());
+
+        var a = "hello";
+
+        echo(a.toUpperCase());
+
+        echo(a);
+
     }
 
     private String hello() {
         return XMLConstants.XML_NS_PREFIX;
     }
+
+    public static void echo(String s){
+        System.out.println(s);
+    }
+
 }
