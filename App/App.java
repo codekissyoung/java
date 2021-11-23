@@ -6,6 +6,10 @@ import javax.xml.XMLConstants;
 public class App {
     public static void main(String[] args) {
 
+        int x = 137;
+        byte b = (byte) x;
+        echo(String.valueOf(b));
+
         System.out.println("The square root " + "of \u03C0(π)\u2122 is " + Math.sqrt(Math.PI));
 
         var ems = new Employee[3];
