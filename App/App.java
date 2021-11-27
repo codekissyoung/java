@@ -2,9 +2,13 @@ package App;
 import inheri.Employee;
 import inheri.Manager;
 import javax.xml.XMLConstants;
+import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args) {
+
+        var ints = new ArrayList<Integer>();
+        ints.add(10);
 
         int x = 137;
         byte b = (byte) x;
