@@ -54,5 +54,4 @@ public class App {
     public static void echo(String s){
         System.out.println(s);
     }
-
 }

@@ -1,10 +1,7 @@
 package Lexer;
 
-/**
- * 一个简单的Token。
- * 只有类型和文本值两个属性。
- */
+// 一个简单的 Token
 public interface Token{
-    TokenType getType();
-    String getText();
+    TokenType getType(); // 类型
+    String getText();    // 文本值
 }

@@ -12,7 +12,7 @@ public class Lexer {
 
         var script = "int age = 45;";
         System.out.println("parse :" + script);
-        SimpleTokenReader tokenReader = lexer.tokenize(script);
+        var tokenReader = lexer.tokenize(script);
         dump(tokenReader);
 
         //测试inta的解析
@@ -40,30 +40,54 @@ public class Lexer {
         dump(tokenReader);
     }
 
-    //下面几个变量是在解析过程中用到的临时变量,如果要优化的话，可以塞到方法里隐藏起来
-    private StringBuffer tokenText = null;   //临时保存token的文本
-    private List<Token> tokens = null;       //保存解析出来的Token
-    private SimpleToken token = null;        //当前正在解析的Token
+    // 有限状态机的各种状态
+    enum DfaState {
+        Initial,    // 初始状态
+        Identifier, // 标识符
+        Assignment, // =
+        GT,         // >
+        GE,         // >=
+        Plus,       // +
+        Minus,      // -
+        Star,       // *
+        Slash,      // /
+        If,
+        Id_if1,
+        Id_if2,
+        Else,
+        Id_else1,
+        Id_else2,
+        Id_else3,
+        Id_else4,
+        Int,
+        Id_int1,
+        Id_int2,
+        Id_int3,
+        SemiColon,
+        LeftParen,
+        RightParen,
+        IntLiteral
+    }
 
-    //是否是字母
+    //下面几个变量是在解析过程中用到的临时变量,如果要优化的话，可以塞到方法里隐藏起来
+    private StringBuffer tokenText = null;   // 临时保存token的文本
+    private List<Token> tokens = null;       // 保存解析出来的Token
+    private SimpleToken token = null;        // 当前正在解析的Token
+
     private boolean isAlpha(int ch) {
         return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z';
     }
-
-    //是否是数字
     private boolean isDigit(int ch) {
         return ch >= '0' && ch <= '9';
     }
-
-    //是否是空白字符
     private boolean isBlank(int ch) {
         return ch == ' ' || ch == '\t' || ch == '\n';
     }
 
     /**
-     * 有限状态机进入初始状态。
-     * 这个初始状态其实并不做停留，它马上进入其他状态。
-     * 开始解析的时候，进入初始状态；某个Token解析完毕，也进入初始状态，在这里把Token记下来，然后建立一个新的Token。
+     * 有限状态机进入初始状态
+     * 这个初始状态其实并不做停留，它马上进入其他状态
+     * 开始解析的时候，进入初始状态；某个Token解析完毕，也进入初始状态，在这里把Token记下来，然后建立一个新的Token
      * @param ch
      * @return
      */
@@ -71,25 +95,24 @@ public class Lexer {
         if (tokenText.length() > 0) {
             token.text = tokenText.toString();
             tokens.add(token);
-
             tokenText = new StringBuffer();
             token = new SimpleToken();
         }
 
-        DfaState newState = DfaState.Initial;
-        if (isAlpha(ch)) {              //第一个字符是字母
+        DfaState newState;
+        if (isAlpha(ch)) {
             if (ch == 'i') {
                 newState = DfaState.Id_int1;
             } else {
-                newState = DfaState.Id; //进入Id状态
+                newState = DfaState.Identifier; //进入Id状态
             }
             token.type = TokenType.Identifier;
             tokenText.append(ch);
-        } else if (isDigit(ch)) {       //第一个字符是数字
+        } else if (isDigit(ch)) {
             newState = DfaState.IntLiteral;
             token.type = TokenType.IntLiteral;
             tokenText.append(ch);
-        } else if (ch == '>') {         //第一个字符是>
+        } else if (ch == '>') {
             newState = DfaState.GT;
             token.type = TokenType.GT;
             tokenText.append(ch);
@@ -132,27 +155,25 @@ public class Lexer {
     }
 
     /**
-     * 解析字符串，形成Token。
-     * 这是一个有限状态自动机，在不同的状态中迁移。
-     * @param code
-     * @return
+     * 解析字符串，形成Token
+     * 这是一个有限状态自动机，在不同的状态中迁移
      */
-    public SimpleTokenReader tokenize(String code) {
+    public SimpleTokenReader tokenize(String codeStr) {
         tokens = new ArrayList<Token>();
-        CharArrayReader reader = new CharArrayReader(code.toCharArray());
+        var reader = new CharArrayReader(codeStr.toCharArray());
         tokenText = new StringBuffer();
         token = new SimpleToken();
-        int ich = 0;
+        int ich;
         char ch = 0;
-        DfaState state = DfaState.Initial;
+        var state = DfaState.Initial;
         try {
             while ((ich = reader.read()) != -1) {
-                ch = (char) ich;
+                ch = (char)ich;
                 switch (state) {
                     case Initial:
                         state = initToken(ch);          //重新确定后续状态
                         break;
-                    case Id:
+                    case Identifier:
                         if (isAlpha(ch) || isDigit(ch)) {
                             tokenText.append(ch);       //保持标识符状态
                         } else {
@@ -192,7 +213,7 @@ public class Lexer {
                             tokenText.append(ch);
                         }
                         else if (isDigit(ch) || isAlpha(ch)){
-                            state = DfaState.Id;    //切换回Id状态
+                            state = DfaState.Identifier;    //切换回Id状态
                             tokenText.append(ch);
                         }
                         else {
@@ -205,7 +226,7 @@ public class Lexer {
                             tokenText.append(ch);
                         }
                         else if (isDigit(ch) || isAlpha(ch)){
-                            state = DfaState.Id;    //切换回id状态
+                            state = DfaState.Identifier;    //切换回id状态
                             tokenText.append(ch);
                         }
                         else {
@@ -218,14 +239,13 @@ public class Lexer {
                             state = initToken(ch);
                         }
                         else{
-                            state = DfaState.Id;    //切换回Id状态
+                            state = DfaState.Identifier;    //切换回Id状态
                             tokenText.append(ch);
                         }
                         break;
                     default:
 
                 }
-
             }
             // 把最后一个token送进去
             if (tokenText.length() > 0) {
@@ -234,12 +254,11 @@ public class Lexer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return new SimpleTokenReader(tokens);
     }
 
     /**
-     * Token的一个简单实现。只有类型和文本值两个属性。
+     * Token的一个简单实现只有类型和文本值两个属性
      */
     private static final class SimpleToken implements Token {
         private TokenType type = null;         //Token类型
@@ -250,10 +269,7 @@ public class Lexer {
         }
     }
 
-    /**
-     * 打印所有的Token
-     * @param tokenReader
-     */
+    // 打印所有的Token
     public static void dump(SimpleTokenReader tokenReader){
         System.out.println("text\ttype");
         Token token = null;
@@ -262,65 +278,39 @@ public class Lexer {
         }
     }
 
-    /**
-     * 有限状态机的各种状态。
-     */
-    private enum DfaState {
-        Initial,
-        If, Id_if1, Id_if2, Else, Id_else1, Id_else2, Id_else3, Id_else4, Int, Id_int1, Id_int2, Id_int3, Id, GT, GE,
-        Assignment,
-        Plus, Minus, Star, Slash,
-        SemiColon,
-        LeftParen,
-        RightParen,
-        IntLiteral
-    }
-
-    /**
-     * 一个简单的Token流。是把一个Token列表进行了封装。
-     */
+    // 一个简单的Token流是把一个Token列表进行了封装
     private static class SimpleTokenReader implements TokenReader {
-        List<Token> tokens = null;
+        List<Token> tokens;
         int pos = 0;
 
         public SimpleTokenReader(List<Token> tokens) {
             this.tokens = tokens;
         }
 
-        @Override
         public Token read() {
             if (pos < tokens.size()) {
                 return tokens.get(pos++);
             }
             return null;
         }
-
-        @Override
         public Token peek() {
             if (pos < tokens.size()) {
                 return tokens.get(pos);
             }
             return null;
         }
-
-        @Override
         public void unread() {
             if (pos > 0) {
                 pos--;
             }
         }
-
-        @Override
         public int getPosition() {
             return pos;
         }
-
-        @Override
         public void setPosition(int position) {
             if (position >=0 && position < tokens.size()){
                 pos = position;
             }
         }
-
     }
 }
