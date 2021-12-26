@@ -56,6 +56,7 @@ public class Lexer {
         Minus,      // -
         Star,       // *
         Slash,      // /
+        doubleSlash,     // //
         Id_int1,
         Id_int2,
         Id_int3,
@@ -140,7 +141,6 @@ public class Lexer {
                 case Plus:
                 case Minus:
                 case Star:
-                case Slash:
                 case SemiColon:
                 case LeftParen:
                 case RightParen:
@@ -161,6 +161,15 @@ public class Lexer {
                         state = fsm_state.GE;
                         tokenTmpStr.append(ch);
                     } else {
+                        state = changeState(ch);
+                    }
+                    break;
+                case Slash:
+                    if(ch == '/'){  // 当前是 / , 再来一个 /
+                        oneToken.type = TokenType.doubleSlash;
+                        state = fsm_state.doubleSlash;
+                        tokenTmpStr.append(ch);
+                    }else{
                         state = changeState(ch);
                     }
                     break;

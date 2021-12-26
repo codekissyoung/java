@@ -5,6 +5,7 @@ public enum TokenType{
     Minus,           // -
     Star,            // *
     Slash,           // /
+    doubleSlash,     // //
     GE,              // >=
     GT,              // >
     EQ,              // ==
