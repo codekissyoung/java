@@ -10,36 +10,17 @@ public class Lexer {
     public static void main(String[] args) {
         try {
             var lexer = new Lexer();
-            var script = " int age = 45;\nvar \tname = 'link';" +
-                    " if(age >= 76) {println('>');}" +
-                    "\nint level += 2 + 3 * 5;// test 注释\n";
+            var script = """
+                    int age = 45;
+                    if(age >= 76) {
+                        println('>');
+                    }
+                    int level += 2 + 3 * 5; // test 注释;
+                    var name = 'link';
+                    """;
             System.out.println("parse :\n" + script);
             var tokenReader = lexer.tokenize(script);
             dump(tokenReader);
-
-//            //测试inta的解析
-//            script = "inta age = 45;";
-//            System.out.println("\nparse :" + script);
-//            tokenReader = lexer.tokenize(script);
-//            dump(tokenReader);
-//
-//            //测试in的解析
-//            script = "in age = 45;";
-//            System.out.println("\nparse :" + script);
-//            tokenReader = lexer.tokenize(script);
-//            dump(tokenReader);
-//
-//            //测试>=的解析
-//            script = "age >= 45;";
-//            System.out.println("\nparse :" + script);
-//            tokenReader = lexer.tokenize(script);
-//            dump(tokenReader);
-//
-//            //测试>的解析
-//            script = "age > 45;";
-//            System.out.println("\nparse :" + script);
-//            tokenReader = lexer.tokenize(script);
-//            dump(tokenReader);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -49,14 +30,14 @@ public class Lexer {
     enum fsm_state {
         Init,       // 初始状态
         Identifier, // 标识符
-        Assign,      // =
+        Assign,     // =
         GT,         // >
         GE,         // >=
         Plus,       // +
         Minus,      // -
         Star,       // *
         Slash,      // /
-        doubleSlash,     // //
+        doubleSlash,// //
         Id_int1,
         Id_int2,
         Id_int3,
@@ -83,11 +64,7 @@ public class Lexer {
     private static class SimpleTokenReader implements TokenReader {
         List<Token> tokens;
         int pos = 0;
-
-        public SimpleTokenReader(List<Token> tokens) {
-            this.tokens = tokens;
-        }
-
+        public SimpleTokenReader(List<Token> tokens) {this.tokens = tokens;}
         public Token read() {
             if (pos < tokens.size()) {
                 return tokens.get(pos++);
@@ -136,7 +113,7 @@ public class Lexer {
             switch (state) // 状态机当前状态
             {
                 case Init:
-                case GE:
+                case GE: // >=
                 case Assign:
                 case Plus:
                 case Minus:
@@ -146,7 +123,17 @@ public class Lexer {
                 case RightParen:
                 case singleQuotes:
                 case doubleQuotes:
+                case leftCurlyBrace:
+                case rightCurlyBrace:
                     state = changeState(ch);// 根据读入的 ch , 修改状态
+                    break;
+                    // // 后面的字符都被解析为注释
+                case doubleSlash:
+                    if(ch != '\n'){
+                        tokenTmpStr.append(ch);
+                    }else{
+                        state = changeState(ch);
+                    }
                     break;
                 case Identifier: // 如果已经是标识符状态
                     if (isAlpha(ch) || isDigit(ch)) { // 如果是字母或数字，则继续保持标识符状态
@@ -225,7 +212,8 @@ public class Lexer {
     /**
      * 有限状态机进入初始状态
      * 这个初始状态其实并不做停留，它马上进入其他状态
-     * 开始解析的时候，进入初始状态；某个Token解析完毕，也进入初始状态，在这里把Token记下来，然后建立一个新的Token
+     * 开始解析的时候，进入初始状态；某个Token解析完毕，
+     * 也进入初始状态，在这里把Token记下来，然后建立一个新的Token
      */
     private fsm_state changeState(char ch) {
         // 已经鉴定了一个 token 了, 加入到序列中
@@ -292,6 +280,14 @@ public class Lexer {
         } else if(ch == '\"'){
             newState = fsm_state.doubleQuotes;
             oneToken.type = TokenType.doubleQuotes;
+            tokenTmpStr.append(ch);
+        } else if (ch =='{'){
+            newState = fsm_state.leftCurlyBrace;
+            oneToken.type = TokenType.leftCurlyBrace;
+            tokenTmpStr.append(ch);
+        } else if (ch =='}'){
+            newState = fsm_state.rightCurlyBrace;
+            oneToken.type = TokenType.rightCurlyBrace;
             tokenTmpStr.append(ch);
         } else {
             if(ch == '\n'){
