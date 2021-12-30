@@ -223,7 +223,6 @@ public class Lexer {
             tokenTmpStr = new StringBuffer();
             oneToken = new SimpleToken();
         }
-
         fsm_state newState;
         if (isAlpha(ch)) {
             if (ch == 'i') {
@@ -290,12 +289,16 @@ public class Lexer {
             oneToken.type = TokenType.rightCurlyBrace;
             tokenTmpStr.append(ch);
         } else {
-            if(ch == '\n'){
-                System.out.printf("skipped : %d \\n\n",(int)ch);
-            } else if(ch == ' '){
-                System.out.printf("skipped : %d \\b\n",(int)ch);
-            } else if(ch == '\t'){
-                System.out.printf("skipped : %d \\t\n",(int)ch);
+            if( isBlank(ch)){
+                String str = "";
+                if(ch == ' '){
+                    str = "\\b";
+                }else if(ch == '\t'){
+                    str = "\\t";
+                }else{
+                    str = "\\n";
+                }
+//                System.out.printf("skipped : %d "+str+"\n",(int)ch);
             } else{
                 System.out.printf("skipped unknown character: %d %c\n",(int)ch, ch);
             }
