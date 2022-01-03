@@ -1,40 +1,8 @@
-package Demo.Arr;
+package Demo;
 
 import java.util.ArrayList;
-
-public class demo03 {
-
-    public static void main(String[] args) {
-        var matrix1 = new int[][]{
-                {1, 2, 3, 4, 5 },
-                {6, 7, 8, 9, 10},
-                {11,12,13,14,15},
-                {16,17,18,19,20},
-                {21,22,23,24,25},
-        };
-        var matrix2 = new int[][]{
-                {1, 2, 3, 4},
-                {6, 7, 8, 9},
-                {11,12,13,14},
-                {16,17,18,19},
-                {21,22,23,24},
-        };
-        var matrix3 = new int[][]{
-                {1, 2, 3, 4, 5 },
-                {6, 7, 8, 9, 10},
-                {11,12,13,14,15},
-                {16,17,18,19,20},
-        };
-        var matrix4 = new int[][]{
-                {1, 2, 3, 4 },
-                {6, 7, 8, 9},
-                {11,12,13,14},
-                {16,17,18,19},
-        };
-        System.out.println(printMatrix(matrix4).toString());
-    }
-
-    public static ArrayList<Integer> printMatrix(int[][] matrix) {
+public class Solution {
+    public ArrayList<Integer> printMatrix(int[][] matrix) {
         if (matrix.length <= 0)
             return new ArrayList<>();
 
@@ -79,6 +47,4 @@ public class demo03 {
         }
         return ret;
     }
-
 }
-
