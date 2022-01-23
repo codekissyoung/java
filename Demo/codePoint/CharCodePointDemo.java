@@ -33,6 +33,7 @@ public class CharCodePointDemo {
         for (int index = 0; index < sentence.length(); ) {
             int cp = sentence.codePointAt(index);
             System.out.print(cp + " ");
+            // 如果是两个码点存储的 Unicode
             if (Character.isSupplementaryCodePoint(cp)) {
                 index += 2;
             } else {
